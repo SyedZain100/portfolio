@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — YourBrand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#080808;--deep:#111111;--card:#161616;--border:#222222;--gold:#C9A84C;--gold-lt:#E8C97A;--gold-dim:#7a6030;--white:#F5F0E8;--gray:#AAAAAA;--dim:#555555;--font-display:'Bebas Neue',sans-serif;--font-serif:'Cormorant Garamond',serif;--font-body:'Inter',sans-serif;--nav-h:70px;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden;}
+  ::selection{background:var(--gold);color:var(--black);}
+  ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--black);}::-webkit-scrollbar-thumb{background:var(--gold-dim);}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 60px;border-bottom:1px solid transparent;transition:border-color .4s,background .4s;}
+  nav.scrolled{background:rgba(8,8,8,.88);backdrop-filter:blur(18px);border-color:var(--border);}
+  .nav-logo{font-family:var(--font-display);font-size:26px;letter-spacing:3px;color:var(--gold);text-decoration:none;}
+  .nav-logo span{color:var(--white);}
+  .nav-links{display:flex;gap:40px;list-style:none;}
+  .nav-links a{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s;position:relative;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--gold);transition:width .3s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+  .nav-cta{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--gold);padding:10px 24px;text-decoration:none;font-weight:500;transition:background .3s;}
+  .nav-cta:hover{background:var(--gold-lt);}
+
+  .page-header{min-height:50vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 60px 80px;padding-top:var(--nav-h);position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
+  .page-header-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 100%,rgba(201,168,76,.06),transparent 70%);}
+  .ph-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards;}
+  .ph-title{font-family:var(--font-display);font-size:clamp(56px,8vw,110px);line-height:.92;letter-spacing:2px;opacity:0;animation:fadeUp .9s .4s forwards;}
+  .ph-title em{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--gold);}
+  .ph-sub{font-family:var(--font-serif);font-size:16px;font-weight:300;color:var(--gray);margin-top:20px;opacity:0;animation:fadeUp .9s .6s forwards;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+  section{padding:100px 60px;}
+  .section-tag{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .section-tag::before{content:'';width:40px;height:1px;background:var(--gold);}
+  .section-title{font-family:var(--font-display);font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:1px;margin-bottom:16px;}
+  .section-title em{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--gold);}
+
+  /* CONTACT GRID */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start;margin-top:60px;}
+
+  .contact-info{}
+  .ci-item{display:flex;align-items:flex-start;gap:20px;margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--border);}
+  .ci-item:last-child{border-bottom:none;}
+  .ci-icon{width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .4s;}
+  .ci-item:hover .ci-icon{border-color:var(--gold);}
+  .ci-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;}
+  .ci-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+  .ci-value{font-size:14px;color:var(--white);}
+  .ci-value a{color:var(--white);text-decoration:none;transition:color .3s;}
+  .ci-value a:hover{color:var(--gold);}
+
+  .response-badge{
+    background:rgba(201,168,76,.08);
+    border:1px solid var(--gold-dim);
+    padding:20px 24px;
+    margin-top:40px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .rb-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .rb-text{font-size:12px;color:var(--gray);line-height:1.6;}
+  .rb-text strong{color:var(--gold);}
+
+  .wa-btn{
+    display:flex;align-items:center;gap:12px;
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:20px 28px;
+    margin-top:24px;
+    text-decoration:none;
+    transition:all .4s;
+  }
+  .wa-btn:hover{border-color:var(--gold);background:#1a1a1a;}
+  .wa-btn svg{width:24px;height:24px;fill:var(--gold);}
+  .wa-text .wl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:3px;}
+  .wa-text .wv{font-size:14px;color:var(--white);}
+
+  /* FORM */
+  .contact-form{}
+  .form-group{margin-bottom:20px;}
+  label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:8px;}
+  input,select,textarea{
+    width:100%;
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--white);
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:300;
+    padding:16px 20px;
+    outline:none;
+    transition:border-color .3s;
+    -webkit-appearance:none;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--gold);}
+  input::placeholder,textarea::placeholder{color:var(--dim);}
+  select{cursor:pointer;color:var(--gray);}
+  select option{background:var(--card);}
+  textarea{resize:vertical;min-height:140px;line-height:1.8;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .form-submit{
+    font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+    color:var(--black);background:var(--gold);
+    padding:18px 48px;border:none;cursor:pointer;
+    font-weight:500;transition:all .3s;width:100%;margin-top:8px;
+    font-family:var(--font-body);
+  }
+  .form-submit:hover{background:var(--gold-lt);}
+  .form-note{font-size:10px;color:var(--dim);text-align:center;margin-top:16px;line-height:1.6;}
+
+  /* SUCCESS STATE */
+  .form-success{
+    display:none;
+    text-align:center;
+    padding:60px 40px;
+    border:1px solid var(--gold-dim);
+    background:rgba(201,168,76,.05);
+  }
+  .form-success .fs-icon{font-size:48px;margin-bottom:16px;}
+  .form-success h3{font-family:var(--font-display);font-size:32px;color:var(--gold);margin-bottom:8px;}
+  .form-success p{font-size:13px;color:var(--gray);}
+
+  /* FAQ */
+  .faq{background:var(--deep);}
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:60px;}
+  .faq-item{background:var(--card);padding:0;overflow:hidden;}
+  .faq-q{
+    width:100%;background:none;border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:28px 32px;gap:20px;
+    text-align:left;
+  }
+  .faq-q-text{font-size:13px;font-weight:500;color:var(--white);line-height:1.5;flex:1;}
+  .faq-icon{
+    width:28px;height:28px;border:1px solid var(--border);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;transition:all .3s;color:var(--gold);font-size:16px;
+  }
+  .faq-item.open .faq-icon{background:var(--gold);color:var(--black);border-color:var(--gold);transform:rotate(45deg);}
+  .faq-a{
+    max-height:0;overflow:hidden;
+    transition:max-height .4s ease,padding .4s ease;
+    font-size:12px;line-height:1.9;color:var(--gray);
+    padding:0 32px;
+  }
+  .faq-item.open .faq-a{max-height:200px;padding:0 32px 28px;}
+
+  /* LEGAL */
+  .legal{border-top:1px solid var(--border);}
+  .legal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin-top:48px;}
+  .legal-card{background:var(--card);padding:32px 28px;transition:background .4s;}
+  .legal-card:hover{background:#1a1a1a;}
+  .legal-icon{font-size:24px;margin-bottom:16px;}
+  .legal-title{font-family:var(--font-display);font-size:18px;letter-spacing:1px;margin-bottom:8px;}
+  .legal-desc{font-size:11px;color:var(--dim);line-height:1.8;}
+  .legal-link{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-top:16px;display:inline-block;transition:opacity .3s;}
+  .legal-link:hover{opacity:.7;}
+
+  /* CLOSING */
+  .closing{
+    padding:120px 60px;
+    text-align:center;
+    border-top:1px solid var(--border);
+    position:relative;overflow:hidden;
+  }
+  .closing-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(201,168,76,.05),transparent 70%);}
+  .closing-title{font-family:var(--font-display);font-size:clamp(48px,7vw,96px);line-height:1;letter-spacing:2px;margin-bottom:24px;position:relative;}
+  .closing-title em{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--gold);}
+  .closing-sub{font-family:var(--font-serif);font-size:18px;font-weight:300;color:var(--gray);margin-bottom:48px;position:relative;}
+  .btn-primary{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--black);background:var(--gold);padding:18px 48px;text-decoration:none;font-weight:500;transition:all .3s;display:inline-block;position:relative;}
+  .btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px);}
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s;}
+  .reveal.visible{opacity:1;transform:none;}
+
+  footer{border-top:1px solid var(--border);padding:60px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:var(--font-display);font-size:22px;letter-spacing:3px;color:var(--gold);}
+  .footer-links{display:flex;gap:32px;}
+  .footer-links a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .3s;}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-copy{font-size:10px;color:var(--dim);}
+
+  @media(max-width:900px){
+    nav{padding:0 24px;}.nav-links{display:none;}
+    .page-header{padding:0 24px 60px;padding-top:var(--nav-h);}
+    section,.faq,.legal,.closing{padding:70px 24px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .faq-grid{grid-template-columns:1fr;}
+    .legal-grid{grid-template-columns:repeat(2,1fr);}
+    .closing{padding:80px 24px;}
+    footer{flex-direction:column;gap:24px;text-align:center;padding:40px 24px;}
+    .footer-links{flex-wrap:wrap;justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">YOUR<span>BRAND</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="#form" class="nav-cta">Send Message</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <p class="ph-tag">Let's Build Together</p>
+  <h1 class="ph-title">GET IN <em>Touch</em></h1>
+  <p class="ph-sub">We respond within 24 hours. Tell us about your project and we'll get back to you with a plan.</p>
+</div>
+
+<!-- CONTACT -->
+<section id="form">
+  <div class="reveal">
+    <p class="section-tag">Reach Out</p>
+    <h2 class="section-title">START A <em>Conversation</em></h2>
+  </div>
+
+  <div class="contact-grid">
+    <!-- INFO -->
+    <div class="reveal">
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value"><a href="mailto:hello@yourbrand.com">hello@yourbrand.com</a></div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.05 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div>
+          <div class="ci-label">Phone / WhatsApp</div>
+          <div class="ci-value"><a href="tel:+1234567890">+1 (234) 567-890</a></div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="ci-label">Location</div>
+          <div class="ci-value">Remote — Serving clients worldwide</div>
+        </div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="ci-label">Book a Call</div>
+          <div class="ci-value"><a href="#">Schedule via Calendly →</a></div>
+        </div>
+      </div>
+
+      <div class="response-badge">
+        <div class="rb-dot"></div>
+        <div class="rb-text">We typically respond within <strong>24 hours</strong>. For urgent projects, message us on WhatsApp for a faster response.</div>
+      </div>
+
+      <a href="https://wa.me/1234567890" class="wa-btn" target="_blank">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.105.546 4.083 1.503 5.8L0 24l6.345-1.484A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.006-1.374l-.36-.214-3.724.871.931-3.614-.235-.372A9.808 9.808 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        <div class="wa-text">
+          <div class="wl">WhatsApp</div>
+          <div class="wv">Message us directly</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- FORM -->
+    <div class="reveal">
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" placeholder="john@company.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Service Needed</label>
+            <select>
+              <option value="" disabled selected>Select a service</option>
+              <option>Website Development</option>
+              <option>UI/UX Design</option>
+              <option>Brand Strategy</option>
+              <option>AI Content Strategy</option>
+              <option>E-commerce</option>
+              <option>Maintenance & Support</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Budget Range</label>
+            <select>
+              <option value="" disabled selected>Select budget</option>
+              <option>Under $500</option>
+              <option>$500 – $1,000</option>
+              <option>$1,000 – $3,000</option>
+              <option>$3,000 – $5,000</option>
+              <option>$5,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Project Description *</label>
+          <textarea placeholder="Tell us about your project — what you need, your goals, and any relevant details..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+        <p class="form-note">We respond within 24 hours · All information is kept confidential</p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="fs-icon">✦</div>
+        <h3>MESSAGE RECEIVED</h3>
+        <p>Thank you for reaching out. We will get back to you within 24 hours with next steps.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="reveal">
+    <p class="section-tag">Questions Answered</p>
+    <h2 class="section-title">FREQUENTLY <em>Asked</em></h2>
+  </div>
+
+  <div class="faq-grid">
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">What is the cost of a website?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Our websites start from $500 for basic business sites. Custom builds with full functionality range from $1,000–$5,000 depending on scope, features, and timeline. We provide a detailed proposal after the discovery call with exact pricing — no surprises.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">What is the typical project timeline?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">A standard website takes 2–4 weeks from kickoff to launch. Simple landing pages can be delivered in 5–7 days. Complex projects with custom features take 4–8 weeks. We agree on the timeline upfront and stick to it.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">Do you provide support after launch?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes. All projects include 30 days of post-launch support at no extra cost. After that, we offer monthly maintenance packages covering updates, security, performance, and content changes starting at $99/month.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">What is the payment structure?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">We require a 50% deposit before work begins, 25% at the design approval milestone, and the remaining 25% upon final delivery. For larger projects, we can arrange a custom milestone-based payment plan.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">How many revisions are included?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Every project includes 3 rounds of revisions at each major stage (design and development). This covers any changes within the agreed scope. Additional revisions beyond this are billed at our hourly rate of $50/hr.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">Do you work with clients outside your country?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Absolutely. We work 100% remotely with clients across the US, UK, UAE, Australia, and many other countries. All communication happens via video calls, email, and WhatsApp — time zones are never a barrier.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">Do you offer white-label services?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes. We offer white-label design and development services for agencies. Your clients will never know we're involved. We maintain strict confidentiality and work under your brand. Reach out to discuss partnership arrangements.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">
+        <span class="faq-q-text">What information do I need to provide to start?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">To kickstart your project we'll need: your business goals, examples of websites you like, your brand assets (logo, colors, fonts if available), your content (text and images), and the specific pages/features you need. We guide you through everything in the discovery call.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEGAL -->
+<section class="legal" id="legal">
+  <div class="reveal">
+    <p class="section-tag">Transparency</p>
+    <h2 class="section-title">LEGAL & <em>Policy</em></h2>
+  </div>
+  <div class="legal-grid">
+    <div class="legal-card reveal">
+      <div class="legal-icon">🔒</div>
+      <div class="legal-title">PRIVACY POLICY</div>
+      <div class="legal-desc">We collect only the minimum information needed to serve you. Your data is never sold or shared with third parties. All communications are confidential.</div>
+      <a href="#" class="legal-link">Read Policy →</a>
+    </div>
+    <div class="legal-card reveal">
+      <div class="legal-icon">📄</div>
+      <div class="legal-title">TERMS OF SERVICE</div>
+      <div class="legal-desc">Our terms cover project scope, payment schedules, intellectual property ownership, revision limits, and dispute resolution procedures.</div>
+      <a href="#" class="legal-link">Read Terms →</a>
+    </div>
+    <div class="legal-card reveal">
+      <div class="legal-icon">↩️</div>
+      <div class="legal-title">REFUND POLICY</div>
+      <div class="legal-desc">If you are unsatisfied after the first design delivery, we offer a full refund of the deposit. No questions asked. We stand behind our work completely.</div>
+      <a href="#" class="legal-link">Read Policy →</a>
+    </div>
+    <div class="legal-card reveal">
+      <div class="legal-icon">🏢</div>
+      <div class="legal-title">COMPANY DETAILS</div>
+      <div class="legal-desc">YourBrand is a registered business operating legally. We provide official invoices, receipts, and contracts for every project without exception.</div>
+      <a href="#" class="legal-link">View Details →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing reveal">
+  <div class="closing-bg"></div>
+  <h2 class="closing-title">LET'S BUILD SOMETHING<br><em>Powerful</em> TOGETHER</h2>
+  <p class="closing-sub">Your next level starts with one conversation.</p>
+  <a href="#form" class="btn-primary">Start the Conversation</a>
+</div>
+
+<footer>
+  <div class="footer-logo">YOUR<span style="color:var(--white)">BRAND</span></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="#faq">FAQ</a>
+    <a href="#legal">Legal</a>
+  </div>
+  <p class="footer-copy">© 2025 YourBrand. All rights reserved.</p>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+  const observer=new IntersectionObserver(entries=>entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*100);observer.unobserve(e.target);}
+  }),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=btn.closest('.faq-item');
+      const wasOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Form submit demo
+  document.getElementById('contactForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    document.getElementById('contactForm').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+  });
+</script>
+</body>
+</html>

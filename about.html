@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — YourBrand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:#080808;--deep:#111111;--card:#161616;--border:#222222;
+    --gold:#C9A84C;--gold-lt:#E8C97A;--gold-dim:#7a6030;
+    --white:#F5F0E8;--gray:#AAAAAA;--dim:#555555;
+    --font-display:'Bebas Neue',sans-serif;
+    --font-serif:'Cormorant Garamond',serif;
+    --font-body:'Inter',sans-serif;
+    --nav-h:70px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--black);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden;}
+  ::selection{background:var(--gold);color:var(--black);}
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-track{background:var(--black);}
+  ::-webkit-scrollbar-thumb{background:var(--gold-dim);}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 60px;border-bottom:1px solid transparent;transition:border-color .4s,background .4s,backdrop-filter .4s;}
+  nav.scrolled{background:rgba(8,8,8,.88);backdrop-filter:blur(18px);border-color:var(--border);}
+  .nav-logo{font-family:var(--font-display);font-size:26px;letter-spacing:3px;color:var(--gold);text-decoration:none;}
+  .nav-logo span{color:var(--white);}
+  .nav-links{display:flex;gap:40px;list-style:none;}
+  .nav-links a{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .3s;position:relative;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--gold);transition:width .3s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--gold);}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+  .nav-cta{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--black);background:var(--gold);padding:10px 24px;text-decoration:none;font-weight:500;transition:background .3s,transform .2s;}
+  .nav-cta:hover{background:var(--gold-lt);}
+
+  /* PAGE HEADER */
+  .page-header{
+    min-height:50vh;
+    display:flex;flex-direction:column;
+    justify-content:flex-end;
+    padding:0 60px 80px;
+    padding-top:var(--nav-h);
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid var(--border);
+  }
+  .page-header-bg{
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse 50% 80% at 100% 50%,rgba(201,168,76,.06),transparent 70%);
+  }
+  .ph-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;opacity:0;animation:fadeUp .8s .2s forwards;}
+  .ph-title{font-family:var(--font-display);font-size:clamp(56px,8vw,110px);line-height:.92;letter-spacing:2px;opacity:0;animation:fadeUp .9s .4s forwards;}
+  .ph-title em{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--gold);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+  section{padding:100px 60px;}
+  .section-tag{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+  .section-tag::before{content:'';width:40px;height:1px;background:var(--gold);}
+  .section-title{font-family:var(--font-display);font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:1px;margin-bottom:16px;}
+  .section-title em{font-family:var(--font-serif);font-style:italic;font-weight:300;color:var(--gold);}
+
+  .btn-primary{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--black);background:var(--gold);padding:16px 36px;text-decoration:none;font-weight:500;transition:all .3s;display:inline-block;}
+  .btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px);}
+
+  /* FOUNDER SECTION */
+  .founder{background:var(--deep);}
+  .founder-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:start;
+    margin-top:60px;
+  }
+  .founder-image-wrap{position:relative;}
+  .founder-image{
+    width:100%;
+    aspect-ratio:3/4;
+    background:var(--card);
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--border);
+  }
+  .founder-image-placeholder{
+    width:100%;height:100%;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:16px;
+    color:var(--dim);
+  }
+  .founder-image-placeholder svg{width:56px;height:56px;stroke:var(--gold-dim);fill:none;stroke-width:1;}
+  .founder-image-placeholder p{font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+  .founder-badge{
+    position:absolute;bottom:-1px;left:-1px;
+    background:var(--gold);
+    color:var(--black);
+    padding:12px 24px;
+    font-family:var(--font-display);
+    font-size:14px;
+    letter-spacing:2px;
+  }
+  .founder-accent{
+    position:absolute;top:24px;right:-24px;
+    width:1px;height:120px;
+    background:linear-gradient(var(--gold),transparent);
+  }
+
+  .founder-content{}
+  .founder-name{font-family:var(--font-display);font-size:48px;letter-spacing:2px;margin-bottom:4px;}
+  .founder-role{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:40px;}
+  .founder-story{
+    font-family:var(--font-serif);
+    font-size:17px;font-weight:300;
+    line-height:1.8;color:var(--gray);
+    margin-bottom:40px;
+    border-left:2px solid var(--gold);
+    padding-left:24px;
+  }
+  .founder-body{font-size:13px;line-height:2;color:var(--gray);margin-bottom:40px;}
+
+  .founder-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1px;background:var(--border);
+    margin-bottom:40px;
+  }
+  .f-stat{background:var(--card);padding:24px 20px;text-align:center;}
+  .f-stat .num{font-family:var(--font-display);font-size:40px;color:var(--gold);letter-spacing:2px;}
+  .f-stat .lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+  .founder-mission{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:3px solid var(--gold);
+    padding:28px 32px;
+    margin-bottom:40px;
+  }
+  .founder-mission .m-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .founder-mission p{font-family:var(--font-serif);font-size:17px;font-style:italic;font-weight:300;color:var(--white);line-height:1.7;}
+
+  /* TEAM */
+  .team{padding:100px 60px;border-top:1px solid var(--border);}
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px;}
+  .team-card{position:relative;}
+  .team-photo{
+    width:100%;aspect-ratio:1;
+    background:var(--card);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;overflow:hidden;
+    transition:border-color .4s;
+  }
+  .team-card:hover .team-photo{border-color:var(--gold);}
+  .team-photo svg{width:40px;height:40px;stroke:var(--border);fill:none;stroke-width:1;}
+  .team-name{font-family:var(--font-display);font-size:20px;letter-spacing:1px;margin-bottom:4px;}
+  .team-role{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+
+  /* TESTIMONIALS */
+  .testimonials{background:var(--deep);}
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:60px;}
+  .test-card{background:var(--card);padding:40px 36px;position:relative;transition:background .4s;}
+  .test-card:hover{background:#1a1a1a;}
+  .test-quote{
+    font-family:var(--font-serif);
+    font-size:16px;font-weight:300;font-style:italic;
+    line-height:1.8;color:var(--white);
+    margin-bottom:32px;
+    position:relative;
+  }
+  .test-quote::before{
+    content:'"';
+    font-family:var(--font-serif);
+    font-size:80px;
+    color:var(--gold);
+    opacity:.15;
+    position:absolute;top:-20px;left:-10px;
+    line-height:1;
+  }
+  .test-meta{display:flex;align-items:center;gap:16px;border-top:1px solid var(--border);padding-top:24px;}
+  .test-avatar{
+    width:44px;height:44px;border-radius:50%;
+    background:var(--border);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    font-family:var(--font-display);
+    font-size:16px;color:var(--gold);
+    border:1px solid var(--gold-dim);
+  }
+  .test-name{font-size:12px;font-weight:500;letter-spacing:1px;margin-bottom:3px;}
+  .test-company{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);}
+  .test-result{
+    position:absolute;top:20px;right:20px;
+    font-size:9px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--gold);border:1px solid var(--gold-dim);
+    padding:4px 10px;
+  }
+
+  /* SOCIAL PROOF */
+  .social-proof{padding:100px 60px;border-top:1px solid var(--border);}
+  .sp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);margin:60px 0;}
+  .sp-stat{background:var(--card);padding:48px 32px;text-align:center;}
+  .sp-stat .num{font-family:var(--font-display);font-size:56px;color:var(--gold);letter-spacing:2px;line-height:1;}
+  .sp-stat .lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-top:12px;}
+  .sp-desc{font-family:var(--font-serif);font-size:15px;font-weight:300;color:var(--gray);}
+
+  /* REVEAL */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s;}
+  .reveal.visible{opacity:1;transform:none;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--border);padding:60px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:var(--font-display);font-size:22px;letter-spacing:3px;color:var(--gold);}
+  .footer-links{display:flex;gap:32px;}
+  .footer-links a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .3s;}
+  .footer-links a:hover{color:var(--gold);}
+  .footer-copy{font-size:10px;color:var(--dim);}
+
+  @media(max-width:900px){
+    nav{padding:0 24px;}.nav-links{display:none;}
+    .page-header{padding:0 24px 60px;padding-top:var(--nav-h);}
+    section,.team,.testimonials,.social-proof{padding:70px 24px;}
+    .founder-grid{grid-template-columns:1fr;}
+    .founder-accent{display:none;}
+    .team-grid{grid-template-columns:repeat(2,1fr);}
+    .test-grid{grid-template-columns:1fr;}
+    .sp-stats{grid-template-columns:repeat(2,1fr);}
+    footer{flex-direction:column;gap:24px;text-align:center;padding:40px 24px;}
+    .footer-links{flex-wrap:wrap;justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">YOUR<span>BRAND</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-bg"></div>
+  <p class="ph-tag">The Human Behind The Work</p>
+  <h1 class="ph-title">ABOUT <em>Us</em></h1>
+</div>
+
+<!-- FOUNDER -->
+<section class="founder">
+  <div class="reveal">
+    <p class="section-tag">Founder</p>
+    <h2 class="section-title">THE FACE <em>Behind</em> THE BRAND</h2>
+  </div>
+
+  <div class="founder-grid">
+    <div class="founder-image-wrap reveal">
+      <div class="founder-image">
+        <div class="founder-image-placeholder">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <p>Your Photo Here</p>
+        </div>
+        <div class="founder-badge">FOUNDER & LEAD STRATEGIST</div>
+      </div>
+      <div class="founder-accent"></div>
+    </div>
+
+    <div class="founder-content reveal">
+      <h3 class="founder-name">JOHN DOE</h3>
+      <p class="founder-role">AI & Design Strategist · Digital Growth Expert</p>
+
+      <blockquote class="founder-story">
+        "I started this after watching brilliant businesses fail online — not because of bad products, but because of bad digital presence. I knew I could fix that."
+      </blockquote>
+
+      <p class="founder-body">
+        Before launching this agency, I spent 5 years working inside startups and digital teams — watching what actually moved the needle versus what looked impressive in presentations.<br><br>
+        That experience built one obsession: results over aesthetics. Every project we take on starts with one question — what does success look like for this client in 90 days?
+      </p>
+
+      <div class="founder-stats">
+        <div class="f-stat">
+          <div class="num">120+</div>
+          <div class="lbl">Clients</div>
+        </div>
+        <div class="f-stat">
+          <div class="num">5+</div>
+          <div class="lbl">Years</div>
+        </div>
+        <div class="f-stat">
+          <div class="num">98%</div>
+          <div class="lbl">Satisfaction</div>
+        </div>
+      </div>
+
+      <div class="founder-mission">
+        <p class="m-label">Our Mission</p>
+        <p>To make every business we touch impossible to ignore — through design that communicates trust and strategy that drives real, measurable growth.</p>
+      </div>
+
+      <a href="contact.html" class="btn-primary">Work With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<div class="team">
+  <div class="reveal">
+    <p class="section-tag">The Team</p>
+    <h2 class="section-title">WHO MAKES IT <em>Happen</em></h2>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-photo">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-name">JOHN DOE</div>
+      <div class="team-role">Founder & Strategy</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-name">JANE SMITH</div>
+      <div class="team-role">Lead Designer</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-name">ALEX KHAN</div>
+      <div class="team-role">Lead Developer</div>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-photo">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+      <div class="team-name">SARA LEE</div>
+      <div class="team-role">Content & AI</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="reveal">
+    <p class="section-tag">Client Testimonials</p>
+    <h2 class="section-title">WHAT CLIENTS <em>Say</em></h2>
+  </div>
+
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-result">3x Revenue</div>
+      <p class="test-quote">Our restaurant bookings tripled within 60 days of the new website launching. The investment paid for itself in the first month alone.</p>
+      <div class="test-meta">
+        <div class="test-avatar">AK</div>
+        <div>
+          <div class="test-name">Ahmed Khan</div>
+          <div class="test-company">The Grill House Restaurant</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-result">+40% Leads</div>
+      <p class="test-quote">Delivered the entire project in 3 weeks, on time and exactly as promised. Our lead inquiries increased by 40% within the first 30 days.</p>
+      <div class="test-meta">
+        <div class="test-avatar">SR</div>
+        <div>
+          <div class="test-name">Sarah Roberts</div>
+          <div class="test-company">Roberts Consulting Group</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-result">2x Conversions</div>
+      <p class="test-quote">The redesign transformed how clients perceive us. We went from struggling to close deals to clients coming in ready to sign on the first call.</p>
+      <div class="test-meta">
+        <div class="test-avatar">MN</div>
+        <div>
+          <div class="test-name">Mike Nguyen</div>
+          <div class="test-company">Nexus Digital Agency</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="social-proof">
+  <div class="reveal">
+    <p class="section-tag">By The Numbers</p>
+    <h2 class="section-title">AUTHORITY IN <em>Numbers</em></h2>
+  </div>
+
+  <div class="sp-stats">
+    <div class="sp-stat reveal">
+      <div class="num">120+</div>
+      <div class="lbl">Businesses Served</div>
+    </div>
+    <div class="sp-stat reveal">
+      <div class="num">10+</div>
+      <div class="lbl">Countries Reached</div>
+    </div>
+    <div class="sp-stat reveal">
+      <div class="num">5K+</div>
+      <div class="lbl">LinkedIn Followers</div>
+    </div>
+    <div class="sp-stat reveal">
+      <div class="num">15+</div>
+      <div class="lbl">Workshops Conducted</div>
+    </div>
+  </div>
+
+  <p class="sp-desc reveal">Trusted by startups, consultants, restaurants, e-commerce brands, and professionals across multiple industries — from local businesses to international clients.</p>
+</section>
+
+<footer>
+  <div class="footer-logo">YOUR<span style="color:var(--white)">BRAND</span></div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p class="footer-copy">© 2025 YourBrand. All rights reserved.</p>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+  const observer=new IntersectionObserver(entries=>entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*120);observer.unobserve(e.target);}
+  }),{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(r=>observer.observe(r));
+</script>
+</body>
+</html>
